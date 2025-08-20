@@ -76,6 +76,14 @@ class local_myddleware_external extends external_api {
         $wheretenant = component_class_callback('tool_tenant\\tenancy', 'get_users_subquery',
             [true, true, 'cmc.userid'], '');
 
+        // Check if we are using IOMAD instead.
+        if (empty($wheretenant)) {
+            $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
+                                                    ['cmc.userid'], '');
+            $wheretenant .= component_class_callback('local_iomad\\tenancy', 'get_courses_subquery',
+                                                    ['cm.course'], '');
+        }
+
         // Prepare the query condition.
         if (!empty($id)) {
             $where = (!empty($wheretenant) ? $wheretenant : "")." cmc.id = :id ";
@@ -197,6 +205,14 @@ class local_myddleware_external extends external_api {
         $wheretenant = component_class_callback('tool_tenant\\tenancy', 'get_users_subquery',
             [true, true, 'la.userid'], '');
 
+        // Check if we are using IOMAD instead.
+        if (empty($wheretenant)) {
+            $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
+                                                    ['la.userid'], '');
+            $wheretenant .= component_class_callback('local_iomad\\tenancy', 'get_courses_subquery',
+                                                    ['la.courseid'], '');
+        }
+
         // Prepare the query condition.
         if (!empty($id)) {
             $where = (!empty($wheretenant) ? $wheretenant : "")." la.id = :id ";
@@ -285,11 +301,15 @@ class local_myddleware_external extends external_api {
         $context = context_system::instance();
         self::validate_context($context);
 
+        // Is this an IOMAD site?
+        $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_courses_subquery',
+                                                    ['id'], '');
+
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = ' id = :id';
+            $where = (!empty($wheretenant) ? $wheretenant : "").' id = :id';
         } else {
-            $where = ' timemodified > :timemodified';
+            $where = (!empty($wheretenant) ? $wheretenant : "").' timemodified > :timemodified';
         }
         $queryparams = [
                             'id' => (!empty($params['id']) ? $params['id'] : ''),
@@ -360,11 +380,15 @@ class local_myddleware_external extends external_api {
         $context = context_system::instance();
         self::validate_context($context);
 
+        // Is this an IOMAD site?
+        $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_groups_subquery',
+                                                    ['id'], '');
+
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = ' id = :id';
+            $where = (!empty($wheretenant) ? $wheretenant : "").' id = :id';
         } else {
-            $where = ' timemodified > :timemodified';
+            $where = (!empty($wheretenant) ? $wheretenant : "").' timemodified > :timemodified';
         }
         $queryparams = [
                             'id' => (!empty($params['id']) ? $params['id'] : ''),
@@ -442,6 +466,14 @@ class local_myddleware_external extends external_api {
         // Get the subquery to filter only records linked to the tenant of the current user.
         $wheretenant = component_class_callback('tool_tenant\\tenancy', 'get_users_subquery',
             [true, true, 'gm.userid'], '');
+
+        // Check if we are using IOMAD instead.
+        if (empty($wheretenant)) {
+            $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
+                                                    ['gm.userid'], '');
+            $wheretenant .= component_class_callback('local_iomad\\tenancy', 'get_grous_subquery',
+                                                    ['gm.groupid'], '');
+        }
 
         // Prepare the query condition.
         if (!empty($id)) {
@@ -535,6 +567,12 @@ class local_myddleware_external extends external_api {
         // Get the subquery to filter only records linked to the tenant of the current user.
         $wheretenant = component_class_callback('tool_tenant\\tenancy', 'get_users_subquery',
             [true, true, '{user}.id'], '');
+
+        // Check if we are using IOMAD instead.
+        if (empty($wheretenant)) {
+            $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
+                                                    ['{user}.id'], '');
+        }
 
         // Prepare the query condition.
         if (!empty($id)) {
@@ -662,6 +700,13 @@ class local_myddleware_external extends external_api {
         // Get the subquery to filter only records linked to the tenant of the current user.
         $wheretenant = component_class_callback('tool_tenant\\tenancy', 'get_users_subquery',
             [true, true, 'la.userid'], '');
+
+        // Check if we are using IOMAD instead.
+        if (empty($wheretenant)) {
+            $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
+                                                    ['la.userid'], '');
+        }
+
         // Prepare the query condition.
         if (!empty($id)) {
             $where = (!empty($wheretenant) ? $wheretenant : "")." la.userid = :id ";
@@ -692,6 +737,13 @@ class local_myddleware_external extends external_api {
         // Search every user log.
         $wheretenant = component_class_callback('tool_tenant\\tenancy', 'get_users_subquery',
             [true, true, 'log.userid'], '');
+
+        // Check if we are using IOMAD instead.
+        if (empty($wheretenant)) {
+            $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
+                                                    ['la.userid'], '');
+        }
+
         // Prepare the query condition.
         if (!empty($id)) {
             $where = (!empty($wheretenant) ? $wheretenant : "")." log.userid = :id ";
@@ -725,6 +777,13 @@ class local_myddleware_external extends external_api {
         // Search every quizz attempts.
         $wheretenant = component_class_callback('tool_tenant\\tenancy', 'get_users_subquery',
             [true, true, 'qa.userid'], '');
+
+        // Check if we are using IOMAD instead.
+        if (empty($wheretenant)) {
+            $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
+                                                    ['qa.userid'], '');
+        }
+
         // Prepare the query condition.
         if (!empty($id)) {
             $where = (!empty($wheretenant) ? $wheretenant : "")." qa.userid = :id ";
@@ -758,6 +817,13 @@ class local_myddleware_external extends external_api {
              // Get the subquery to filter only records linked to the tenant of the current user.
             $wheretenant = component_class_callback('tool_tenant\\tenancy', 'get_users_subquery',
                 [true, true, '{user}.id'], '');
+
+            // Check if we are using IOMAD instead.
+            if (empty($wheretenant)) {
+                $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
+                                                        ['{user}.id'], '');
+            }
+
             // Prepare the query condition.
             $where = (!empty($wheretenant) ? $wheretenant : "")." {user}.deleted = 0 AND {user}.id = :id ";
 
@@ -859,6 +925,14 @@ class local_myddleware_external extends external_api {
         // Get the subquery to filter only records linked to the tenant of the current user.
         $wheretenant = component_class_callback('tool_tenant\\tenancy', 'get_users_subquery',
             [true, true, 'userid'], '');
+
+        // Check if we are using IOMAD instead.
+        if (empty($wheretenant)) {
+            $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
+                                                    ['userid'], '');
+            $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_enrolments_subquery',
+                                                    ['enrolid'], '');
+            }
 
         // Prepare the query condition with the tenant.
         if (!empty($id)) {
@@ -968,6 +1042,14 @@ class local_myddleware_external extends external_api {
         $wheretenant = component_class_callback('tool_tenant\\tenancy', 'get_users_subquery',
             [true, true, 'ue.userid'], '');
 
+        // Check if we are using IOMAD instead.
+        if (empty($wheretenant)) {
+            $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
+                                                    ['ue.userid'], '');
+            $wheretenant .= component_class_callback('local_iomad\\tenancy', 'get_enrolments_subquery',
+                                                    ['en.id'], '');
+        }
+
         // Prepare the query condition with the tenant.
         $where = (!empty($wheretenant) ? $wheretenant : "")." ue.userid = :userid AND en.courseid = :courseid ";
 
@@ -1061,6 +1143,14 @@ class local_myddleware_external extends external_api {
         // Get the subquery to filter only records linked to the tenant of the current user.
         $wheretenant = component_class_callback('tool_tenant\\tenancy', 'get_users_subquery',
             [true, true, 'userid'], '');
+
+        // Check if we are using IOMAD instead.
+        if (empty($wheretenant)) {
+            $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
+                                                    ['userid'], '');
+            $wheretenant .= component_class_callback('local_iomad\\tenancy', 'get_courses_subquery',
+                                                    ['userid'], '');
+        }
 
         // Prepare the query condition.
         if (!empty($id)) {
@@ -1187,6 +1277,12 @@ class local_myddleware_external extends external_api {
         // Get the subquery to filter only records linked to the tenant of the current user.
         $wheretenant = component_class_callback('tool_tenant\\tenancy', 'get_users_subquery',
             [true, true, 'userid'], '');
+
+        // Check if we are using IOMAD instead.
+        if (empty($wheretenant)) {
+            $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
+                                                    ['userid'], '');
+        }
 
         // Prepare the query condition.
         if (!empty($id)) {
@@ -1319,11 +1415,15 @@ class local_myddleware_external extends external_api {
         self::validate_context($context);
         require_capability('moodle/competency:usercompetencyview', $context);
 
+        // Check if we are using IOMAD instead.
+        $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_courses_subquery',
+                                                    ['course.id'], '');
+
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = ' competency_modulecomp.id = :id';
+            $where = (!empty($wheretenant) ? $wheretenant : "").' competency_modulecomp.id = :id';
         } else {
-            $where = ' competency_modulecomp.timemodified > :timemodified';
+            $where = (!empty($wheretenant) ? $wheretenant : "").' competency_modulecomp.timemodified > :timemodified';
         }
         $queryparams = [
                             'id' => (!empty($params['id']) ? $params['id'] : ''),
@@ -1444,6 +1544,14 @@ class local_myddleware_external extends external_api {
         // Get the subquery to filter only records linked to the tenant of the current user.
         $wheretenant = component_class_callback('tool_tenant\\tenancy', 'get_users_subquery',
             [true, true, 'grd.userid'], '');
+
+        // Check if we are using IOMAD instead.
+        if (empty($wheretenant)) {
+            $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
+                                                    ['grd.userid'], '');
+            $wheretenant .= component_class_callback('local_iomad\\tenancy', 'get_courses_subquery',
+                                                    ['itm.courseid'], '');
+        }
 
         // Prepare the query condition.
         if (!empty($id)) {
@@ -1593,11 +1701,17 @@ class local_myddleware_external extends external_api {
 
         require_capability('moodle/user:viewdetails', $context);
 
+        // Check if we are using IOMAD instead.
+        $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_courses_subquery',
+                                                    ['cm.course'], '');
+        $wheretenant .= component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
+                                                    ['att.userid'], '');
+
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = ' att.id = :id';
+            $where = (!empty($wheretenant) ? $wheretenant : "").' att.id = :id';
         } else {
-            $where = ' att.timemodified > :timemodified';
+            $where = (!empty($wheretenant) ? $wheretenant : "").' att.timemodified > :timemodified';
         }
         $queryparams = [
                             'id' => (!empty($params['id']) ? $params['id'] : ''),
