@@ -166,6 +166,8 @@ $services = [
                         'core_webservice_get_site_info',
                         'enrol_manual_enrol_users',
                         'enrol_manual_unenrol_users',
+                        'block_iomad_company_admin_get_companies',
+                        'block_iomad_company_admin_get_company_courses',
                 ],
                 'restrictedusers' => 1,
                 'enabled' => 1,

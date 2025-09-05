@@ -86,9 +86,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." cmc.id = :id ";
+            $where = " cmc.id = :id ".(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." cmc.timemodified > :timemodified ";
+            $where = " cmc.timemodified > :timemodified ".(!empty($wheretenant) ? $wheretenant : "");
         }
 
         // Retrieve token list (including linked users firstname/lastname and linked services name).
@@ -215,9 +215,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." la.id = :id ";
+            $where = " la.id = :id ".(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." la.timeaccess > :timemodified ";
+            $where = " la.timeaccess > :timemodified ".(!empty($wheretenant) ? $wheretenant : "");
         }
 
         $sql = "
@@ -307,9 +307,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "").' id = :id';
+            $where = ' id = :id '.(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = (!empty($wheretenant) ? $wheretenant : "").' timemodified > :timemodified';
+            $where = ' timemodified > :timemodified '.(!empty($wheretenant) ? $wheretenant : "");
         }
         $queryparams = [
                             'id' => (!empty($params['id']) ? $params['id'] : ''),
@@ -386,9 +386,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "").' id = :id';
+            $where = ' id = :id '.(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = (!empty($wheretenant) ? $wheretenant : "").' timemodified > :timemodified';
+            $where = ' timemodified > :timemodified '.(!empty($wheretenant) ? $wheretenant : "");
         }
         $queryparams = [
                             'id' => (!empty($params['id']) ? $params['id'] : ''),
@@ -477,9 +477,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." gm.id = :id ";
+            $where = " gm.id = :id ".(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." gm.timeadded > :timemodified ";
+            $where = " gm.timeadded > :timemodified ".(!empty($wheretenant) ? $wheretenant : "");
         }
 
         $sql = "
@@ -576,9 +576,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." {user}.deleted = 0 AND {user}.id = :id ";
+            $where = " {user}.deleted = 0 AND {user}.id = :id ".(!empty($wheretenant) ? $wheretenant : "");
         } else if (!empty($timemodified)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." {user}.deleted = 0 AND {user}.timemodified > :timemodified ";
+            $where = " {user}.deleted = 0 AND {user}.timemodified > :timemodified ".(!empty($wheretenant) ? $wheretenant : "");
         } else {
             return null;
         }
@@ -709,9 +709,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." la.userid = :id ";
+            $where = " la.userid = :id ".(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." la.timeaccess > :timemodified ";
+            $where = " la.timeaccess > :timemodified ".(!empty($wheretenant) ? $wheretenant : "");
         }
         $sqllastaccess = "SELECT la.userid, la.timeaccess FROM {user_lastaccess} la WHERE ".$where;
         $queryparamslastaccess = [
@@ -746,9 +746,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." log.userid = :id ";
+            $where = " log.userid = :id ".(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." log.timecreated > :timemodified ";
+            $where = " log.timecreated > :timemodified ".(!empty($wheretenant) ? $wheretenant : "");
         }
         $sqluserlog = "SELECT log.userid, log.timecreated FROM {logstore_standard_log} log
                         WHERE
@@ -786,9 +786,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." qa.userid = :id ";
+            $where = " qa.userid = :id ".(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." qa.timemodified > :timemodified ";
+            $where = " qa.timemodified > :timemodified ".(!empty($wheretenant) ? $wheretenant : "");
         }
         $sqlquizattempt = "SELECT qa.userid, qa.timemodified FROM {quiz_attempts} qa WHERE ".$where;
         $queryparamsquizattemp = [
@@ -825,7 +825,7 @@ class local_myddleware_external extends external_api {
             }
 
             // Prepare the query condition.
-            $where = (!empty($wheretenant) ? $wheretenant : "")." {user}.deleted = 0 AND {user}.id = :id ";
+            $where = " {user}.deleted = 0 AND {user}.id = :id ".(!empty($wheretenant) ? $wheretenant : "");
 
             foreach ($users as $userid => $usertimemodified) {
                 // Get the detail of each user.
@@ -936,9 +936,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition with the tenant.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." id = :id ";
+            $where = " id = :id ".(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." timemodified > :timemodified ";
+            $where = " timemodified > :timemodified ".(!empty($wheretenant) ? $wheretenant : "");
         }
 
         $queryparams = [
@@ -1051,7 +1051,7 @@ class local_myddleware_external extends external_api {
         }
 
         // Prepare the query condition with the tenant.
-        $where = (!empty($wheretenant) ? $wheretenant : "")." ue.userid = :userid AND en.courseid = :courseid ";
+        $where = " ue.userid = :userid AND en.courseid = :courseid ".(!empty($wheretenant) ? $wheretenant : "");
 
         // Get the user enrolment id.
         $sql = "
@@ -1154,9 +1154,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." id = :id ";
+            $where = " id = :id ".(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." timecompleted > :timemodified  OR reaggregate > 0 ";
+            $where = " timecompleted > :timemodified  OR reaggregate > 0 ".(!empty($wheretenant) ? $wheretenant : "");
         }
         $queryparams = [
                             'id' => (!empty($params['id']) ? $params['id'] : ''),
@@ -1286,9 +1286,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." id = :id ";
+            $where = " id = :id ".(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." timemodified > :timemodified ";
+            $where = " timemodified > :timemodified ".(!empty($wheretenant) ? $wheretenant : "");
         }
         $queryparams = [
                             'id' => (!empty($params['id']) ? $params['id'] : ''),
@@ -1421,9 +1421,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "").' competency_modulecomp.id = :id';
+            $where = ' competency_modulecomp.id = :id '.(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = (!empty($wheretenant) ? $wheretenant : "").' competency_modulecomp.timemodified > :timemodified';
+            $where = ' competency_modulecomp.timemodified > :timemodified '.(!empty($wheretenant) ? $wheretenant : "");
         }
         $queryparams = [
                             'id' => (!empty($params['id']) ? $params['id'] : ''),
@@ -1555,9 +1555,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." grd.id = :id ";
+            $where = " grd.id = :id ".(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = (!empty($wheretenant) ? $wheretenant : "")." grd.timemodified > :timemodified ";
+            $where = " grd.timemodified > :timemodified ".(!empty($wheretenant) ? $wheretenant : "");
         }
         $queryparams = [
                             'id' => (!empty($params['id']) ? $params['id'] : ''),
@@ -1709,9 +1709,9 @@ class local_myddleware_external extends external_api {
 
         // Prepare the query condition.
         if (!empty($id)) {
-            $where = (!empty($wheretenant) ? $wheretenant : "").' att.id = :id';
+            $where = ' att.id = :id '.(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = (!empty($wheretenant) ? $wheretenant : "").' att.timemodified > :timemodified';
+            $where = ' att.timemodified > :timemodified '.(!empty($wheretenant) ? $wheretenant : "");
         }
         $queryparams = [
                             'id' => (!empty($params['id']) ? $params['id'] : ''),
