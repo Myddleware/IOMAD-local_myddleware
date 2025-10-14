@@ -741,7 +741,7 @@ class local_myddleware_external extends external_api {
         // Check if we are using IOMAD instead.
         if (empty($wheretenant)) {
             $wheretenant = component_class_callback('local_iomad\\tenancy', 'get_users_subquery',
-                                                    ['la.userid'], '');
+                                                    ['log.userid'], '');
         }
 
         // Prepare the query condition.
