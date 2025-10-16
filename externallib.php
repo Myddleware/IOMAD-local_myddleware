@@ -1156,7 +1156,7 @@ class local_myddleware_external extends external_api {
         if (!empty($id)) {
             $where = " id = :id ".(!empty($wheretenant) ? $wheretenant : "");
         } else {
-            $where = " timecompleted > :timemodified  OR reaggregate > 0 ".(!empty($wheretenant) ? $wheretenant : "");
+            $where = " ( timecompleted > :timemodified  OR reaggregate > 0 ) ".(!empty($wheretenant) ? $wheretenant : "");
         }
         $queryparams = [
                             'id' => (!empty($params['id']) ? $params['id'] : ''),
