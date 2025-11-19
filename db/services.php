@@ -170,6 +170,7 @@ $services = [
                         'block_iomad_company_admin_get_company_courses',
                         'block_iomad_company_admin_get_user_companies',
                         'block_iomad_company_admin_assign_users',
+                        'block_iomad_company_admin_assign_courses',
                 ],
                 'restrictedusers' => 1,
                 'enabled' => 1,
